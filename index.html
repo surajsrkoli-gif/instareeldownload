@@ -1,735 +1,145 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InstaReel Downloader | Download Instagram Reels Free</title>
-    <meta name="description" content="Free Instagram Reel Downloader - Download any public Instagram Reel in MP4 format with HD quality. No registration required.">
-    <meta name="keywords" content="Instagram Reel download, Instagram video download, download Reels, save Instagram videos, Insta downloader">
-    <meta name="author" content="InstaReel Downloader">
-    <meta property="og:title" content="InstaReel Downloader - Free Instagram Reel Downloader">
-    <meta property="og:description" content="Download Instagram Reels in MP4 format instantly. 100% free and works on all devices.">
-    <meta property="og:type" content="website">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/color/96/instagram-new.png">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- CSS -->
-    <style>
-        :root {
-            --primary: #E1306C;
-            --secondary: #405DE6;
-            --gradient: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
-            --light: #f8f9fa;
-            --dark: #262626;
-            --gray: #8e8e8e;
-            --border: #dbdbdb;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-        
-        body {
-            background-color: #fafafa;
-            color: var(--dark);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        /* Header Styles */
-        header {
-            text-align: center;
-            padding: 30px 0 20px;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .logo-icon {
-            font-size: 2.8rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .logo-text {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-        
-        .logo-text span {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .tagline {
-            font-size: 1.1rem;
-            color: var(--gray);
-            max-width: 700px;
-            margin: 0 auto 30px;
-        }
-        
-        /* Main Card */
-        .main-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-            margin-bottom: 40px;
-            border: 1px solid var(--border);
-        }
-        
-        .card-title {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--dark);
-            text-align: center;
-        }
-        
-        /* Input Section */
-        .input-container {
-            position: relative;
-            margin-bottom: 25px;
-        }
-        
-        .input-label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .input-group {
-            display: flex;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid var(--border);
-            transition: border-color 0.3s;
-        }
-        
-        .input-group:focus-within {
-            border-color: var(--primary);
-        }
-        
-        #url {
-            flex: 1;
-            padding: 16px 20px;
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            background: white;
-        }
-        
-        #downloadBtn {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 0 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            white-space: nowrap;
-        }
-        
-        #downloadBtn:hover {
-            opacity: 0.9;
-        }
-        
-        #downloadBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        /* Instructions */
-        .instructions {
-            background-color: var(--light);
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 25px;
-        }
-        
-        .instructions-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .steps {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .step {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-        }
-        
-        .step-number {
-            background: var(--gradient);
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            flex-shrink: 0;
-            font-size: 0.9rem;
-        }
-        
-        .step-text {
-            color: var(--dark);
-        }
-        
-        /* Loading Spinner */
-        .loading-container {
-            display: none;
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .loading-container.active {
-            display: block;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(225, 48, 108, 0.2);
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .loading-text {
-            color: var(--dark);
-            font-size: 1.1rem;
-        }
-        
-        /* Result Section */
-        .result-container {
-            display: none;
-            text-align: center;
-            padding: 30px 20px;
-            animation: fadeIn 0.5s;
-        }
-        
-        .result-container.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .success-icon {
-            font-size: 4rem;
-            color: #4CAF50;
-            margin-bottom: 20px;
-        }
-        
-        .result-title {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .result-text {
-            color: var(--gray);
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .download-again-btn {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .download-again-btn:hover {
-            opacity: 0.9;
-        }
-        
-        /* Features Section */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border);
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .feature-title {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-        
-        .feature-description {
-            color: var(--gray);
-        }
-        
-        /* FAQ Section */
-        .faq {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border);
-        }
-        
-        .faq-title {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            text-align: center;
-            color: var(--dark);
-        }
-        
-        .faq-item {
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 20px;
-        }
-        
-        .faq-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .faq-question {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: var(--dark);
-            font-weight: 600;
-        }
-        
-        .faq-answer {
-            color: var(--gray);
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: var(--gray);
-            border-top: 1px solid var(--border);
-        }
-        
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .disclaimer {
-            max-width: 800px;
-            margin: 20px auto 0;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: var(--gray);
-        }
-        
-        .copyright {
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .logo-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .logo-text {
-                font-size: 1.8rem;
-            }
-            
-            .main-card {
-                padding: 20px;
-            }
-            
-            .card-title {
-                font-size: 1.5rem;
-            }
-            
-            .input-group {
-                flex-direction: column;
-            }
-            
-            #url {
-                padding: 16px;
-                border-bottom: 1px solid var(--border);
-            }
-            
-            #downloadBtn {
-                padding: 16px;
-                justify-content: center;
-            }
-            
-            .features {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .logo-text {
-                font-size: 1.5rem;
-            }
-            
-            .card-title {
-                font-size: 1.3rem;
-            }
-            
-            .result-title {
-                font-size: 1.5rem;
-            }
-            
-            .faq {
-                padding: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <div class="logo-container">
-                <i class="fab fa-instagram logo-icon"></i>
-                <h1 class="logo-text">Insta<span>Reel</span> Downloader</h1>
-            </div>
-            <p class="tagline">Download any public Instagram Reel in MP4 format instantly. 100% free, no registration required.</p>
-        </header>
-        
-        <!-- Main Content -->
-        <main>
-            <!-- Download Card -->
-            <div class="main-card">
-                <h2 class="card-title">Instagram Reel Downloader</h2>
-                
-                <!-- Input Section -->
-                <div class="input-container">
-                    <label class="input-label" for="url">Instagram Reel URL</label>
-                    <div class="input-group">
-                        <input type="url" id="url" placeholder="https://www.instagram.com/reel/..." autocomplete="off" required>
-                        <button id="downloadBtn">
-                            <i class="fas fa-download"></i> Download Reel
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Instructions -->
-                <div class="instructions">
-                    <h3 class="instructions-title">
-                        <i class="fas fa-info-circle"></i> How to download Instagram Reels
-                    </h3>
-                    <div class="steps">
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <p class="step-text">Open Instagram and copy the link of the Reel you want to download</p>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <p class="step-text">Paste the link in the input field above</p>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <p class="step-text">Click "Download Reel" and save the video to your device</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Loading Spinner -->
-                <div class="loading-container" id="loadingSpinner">
-                    <div class="spinner"></div>
-                    <p class="loading-text">Downloading your Reel...</p>
-                </div>
-                
-                <!-- Result Section -->
-                <div class="result-container" id="resultContainer">
-                    <i class="fas fa-check-circle success-icon"></i>
-                    <h3 class="result-title">Download Complete!</h3>
-                    <p class="result-text">Your Instagram Reel has been downloaded successfully. The video should start downloading automatically. If it doesn't, check your browser downloads.</p>
-                    <button class="download-again-btn" id="downloadAgainBtn">
-                        <i class="fas fa-redo"></i> Download Another Reel
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Features -->
-            <div class="features">
-                <div class="feature-card">
-                    <i class="fas fa-bolt feature-icon"></i>
-                    <h3 class="feature-title">Fast & Easy</h3>
-                    <p class="feature-description">Download Instagram Reels in seconds with just one click. No complicated steps required.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <i class="fas fa-shield-alt feature-icon"></i>
-                    <h3 class="feature-title">Safe & Secure</h3>
-                    <p class="feature-description">We don't store your data or require login. Your privacy is our priority.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <i class="fas fa-mobile-alt feature-icon"></i>
-                    <h3 class="feature-title">Works Everywhere</h3>
-                    <p class="feature-description">Download Reels on any device - desktop, mobile, or tablet. No app installation needed.</p>
-                </div>
-            </div>
-            
-            <!-- FAQ -->
-            <div class="faq">
-                <h2 class="faq-title">Frequently Asked Questions</h2>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">Is this service free?</h3>
-                    <p class="faq-answer">Yes, our Instagram Reel downloader is completely free to use. There are no hidden charges or subscription fees.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">Can I download private Instagram Reels?</h3>
-                    <p class="faq-answer">No, you can only download public Instagram Reels. Private Reels are protected by Instagram's privacy policies.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">What video quality will I get?</h3>
-                    <p class="faq-answer">You'll get the best available quality of the Reel, which is usually HD (1080p) or the highest quality uploaded by the creator.</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3 class="faq-question">Is this tool legal to use?</h3>
-                    <p class="faq-answer">Yes, as long as you respect copyright and only download content for personal use or with the creator's permission.</p>
-                </div>
-            </div>
-        </main>
-        
-        <!-- Footer -->
-        <footer>
-            <div class="footer-logo">InstaReel Downloader</div>
-            <p class="disclaimer">
-                Disclaimer: This tool is not affiliated with Instagram or Meta. Use it at your own risk. Only download content you have permission to use or that is in the public domain. Respect copyright and intellectual property rights.
-            </p>
-            <p class="copyright">&copy; 2023 InstaReel Downloader. All rights reserved.</p>
-        </footer>
-    </div>
-
-    <!-- JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
-            const urlInput = document.getElementById('url');
-            const downloadBtn = document.getElementById('downloadBtn');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            const resultContainer = document.getElementById('resultContainer');
-            const downloadAgainBtn = document.getElementById('downloadAgainBtn');
-            
-            // Backend API URL
-            const BACKEND_URL = 'https://instareeldownload.onrender.com';
-            
-            // Validate Instagram URL
-            function isValidInstagramUrl(url) {
-                const instagramRegex = /https?:\/\/(www\.)?instagram\.com\/(reel|p)\/([a-zA-Z0-9_-]+)\/?/;
-                return instagramRegex.test(url);
-            }
-            
-            // Show loading state
-            function showLoading() {
-                loadingSpinner.classList.add('active');
-                downloadBtn.disabled = true;
-                downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            }
-            
-            // Hide loading state
-            function hideLoading() {
-                loadingSpinner.classList.remove('active');
-                downloadBtn.disabled = false;
-                downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Reel';
-            }
-            
-            // Show result section
-            function showResult() {
-                resultContainer.classList.add('active');
-                // Scroll to result
-                resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
-            
-            // Hide result section
-            function hideResult() {
-                resultContainer.classList.remove('active');
-            }
-            
-            // Reset form for another download
-            function resetForm() {
-                urlInput.value = '';
-                hideResult();
-                urlInput.focus();
-            }
-            
-            // Download Reel function
-            async function downloadReel() {
-                const reelLink = urlInput.value.trim();
-                
-                // Validate input
-                if (!reelLink) {
-                    alert('Please paste an Instagram Reel URL');
-                    urlInput.focus();
-                    return;
-                }
-                
-                if (!isValidInstagramUrl(reelLink)) {
-                    alert('Please enter a valid Instagram Reel URL.\nExample: https://www.instagram.com/reel/ABC1234567/');
-                    urlInput.focus();
-                    return;
-                }
-                
-                // Show loading
-                showLoading();
-                
-                try {
-                    // Call backend API
-                    const res = await fetch(BACKEND_URL, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ url: reelLink })
-                    });
-                    
-                    // Handle errors
-                    if (!res.ok) {
-                        throw new Error('Download failed! Please check if the Reel is public and try again.');
-                    }
-                    
-                    // Get the video as blob
-                    const blob = await res.blob();
-                    
-                    // Check if blob is valid
-                    if (blob.size === 0) {
-                        throw new Error('Download failed! Received empty file. Please try again.');
-                    }
-                    
-                    // Create download link
-                    const a = document.createElement('a');
-                    a.href = URL.createObjectURL(blob);
-                    a.download = `instagram_reel_${Date.now()}.mp4`;
-                    
-                    // Trigger download
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    
-                    // Show success message
-                    hideLoading();
-                    showResult();
-                    
-                } catch (error) {
-                    hideLoading();
-                    alert(error.message || 'Download failed! Please try again with a public Instagram Reel link.');
-                    console.error('Download error:', error);
-                }
-            }
-            
-            // Event Listeners
-            downloadBtn.addEventListener('click', downloadReel);
-            
-            downloadAgainBtn.addEventListener('click', resetForm);
-            
-            // Allow pressing Enter to trigger download
-            urlInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    downloadReel();
-                }
-            });
-            
-            // Auto-focus on input
-            urlInput.focus();
-            
-            // Demo: If page loads with a URL parameter, auto-fill it
-            const urlParams = new URLSearchParams(window.location.search);
-            const demoUrl = urlParams.get('url');
-            
-            if (demoUrl && isValidInstagramUrl(demoUrl)) {
-                urlInput.value = demoUrl;
-            }
-        });
-    </script>
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>AUTO SLICE — Deluxe</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111827;font-family:Inter,Arial,sans-serif;color:#fff}body{display:flex;align-items:center;justify-content:center}
+#frame{position:relative;width:min(100vw,56.25vh);height:min(177.7778vw,100vh);aspect-ratio:9/16;overflow:hidden;background:#a9b9f5;box-shadow:0 0 60px #000}
+canvas{width:100%;height:100%;display:block}
+.top{position:absolute;top:0;left:0;right:0;padding:5.3% 5.5%;pointer-events:none}
+.brand{font-size:clamp(17px,5vw,26px);font-weight:1000;letter-spacing:.17em;text-shadow:0 2px 0 #8091c6,0 5px 14px #43558c66}
+.brand span{color:#fff2a2}
+.tag{margin-top:3px;font-size:clamp(7px,1.9vw,10px);font-weight:800;letter-spacing:.19em;color:#f9fbff;text-shadow:0 1px 4px #6e83bb}
+.pills{display:flex;gap:8px;margin-top:13px;width:78%}
+.pill{flex:1;min-width:0;background:linear-gradient(145deg,#34496fdd,#1d2d4fef);border:1px solid #ffffff55;border-radius:12px;padding:7px 9px;box-shadow:0 5px 12px #45547a33,inset 0 1px 0 #ffffff35}
+.pill b{display:block;font-size:clamp(14px,4.1vw,21px);font-weight:900;font-variant-numeric:tabular-nums}
+.pill small{display:block;margin-top:3px;font-size:clamp(7px,1.7vw,9px);font-weight:800;letter-spacing:.14em;color:#d4e2ff}
+#pause{pointer-events:auto;position:absolute;right:5.5%;top:5.2%;border:1px solid #ffffff88;background:linear-gradient(145deg,#3c5077,#25395f);box-shadow:0 4px 10px #35466e44;color:#fff;border-radius:24px;padding:8px 14px;font-size:10px;font-weight:900;letter-spacing:.1em}
+#toast{position:absolute;top:28%;left:4%;right:4%;text-align:center;font-size:clamp(17px,5vw,27px);font-weight:1000;letter-spacing:.13em;color:white;text-shadow:0 3px 0 #8b9bc8,0 6px 15px #263c66;opacity:0;transform:scale(.85);transition:opacity .2s,transform .2s;pointer-events:none}
+#toast.show{opacity:1;transform:scale(1)}
+.footer{position:absolute;bottom:3.5%;left:0;right:0;text-align:center;text-shadow:0 2px 7px #5875a5aa;pointer-events:none}
+.footer b{font-size:clamp(10px,2.8vw,14px);letter-spacing:.2em}
+.footer small{display:block;margin-top:5px;font-size:7px;font-weight:800;letter-spacing:.18em;color:#f5f8ff}
+#levelup{position:absolute;top:17%;left:0;right:0;text-align:center;color:#fff;font-size:10px;letter-spacing:.22em;font-weight:900;opacity:0;pointer-events:none}
+</style></head>
+<body><div id="frame"><canvas id="cv" width="540" height="960"></canvas>
+<div class="top"><div class="brand">AUTO <span>SLICE</span></div><div class="tag">ENDLESS AUTOMATIC CUTTING CHALLENGE</div>
+<div class="pills"><div class="pill"><b id="score">0000</b><small>SCORE</small></div><div class="pill"><b id="combo">x1</b><small>COMBO</small></div><div class="pill"><b id="level">01</b><small>LEVEL</small></div></div></div>
+<button id="pause">Ⅱ PAUSE</button><div id="toast">PERFECT SLICE!</div><div id="levelup">NEW CUTTING STAGE</div>
+<div class="footer"><b id="stage">FRESH MARKET</b><small>THE KNIFE NEVER STOPS · 9:16 LIVE SIMULATION</small></div></div>
+<script>
+(()=>{'use strict';
+const c=document.getElementById('cv'),g=c.getContext('2d'),W=540,H=960;
+const $=id=>document.getElementById(id),scoreEl=$('score'),comboEl=$('combo'),levelEl=$('level'),toast=$('toast'),pause=$('pause'),stage=$('stage'),levelup=$('levelup');
+const rand=(a,b)=>a+Math.random()*(b-a),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const fruitTypes=[
+ {name:'TOMATO',skin:'#ef394d',light:'#ff8b82',inside:'#ffb18e',seed:'#fff0bd',shape:'tomato',r:31},
+ {name:'CUCUMBER',skin:'#319b39',light:'#8bd65b',inside:'#d8f2a0',seed:'#f8ffd8',shape:'cucumber',r:34},
+ {name:'CARROT',skin:'#f28a2e',light:'#ffc15d',inside:'#ffd17b',seed:'#fff0b2',shape:'carrot',r:35},
+ {name:'KIWI',skin:'#8cbd42',light:'#c9e76b',inside:'#d9f19a',seed:'#fff7d2',shape:'kiwi',r:29},
+ {name:'ONION',skin:'#a96bc2',light:'#e1a7ed',inside:'#f5d9f4',seed:'#fff6ff',shape:'onion',r:30},
+ {name:'LEMON',skin:'#f3d34d',light:'#fff08c',inside:'#fff1a4',seed:'#fffbd5',shape:'lemon',r:29},
+ {name:'STRAWBERRY',skin:'#e8375b',light:'#ff8c9b',inside:'#ffabb8',seed:'#ffe5a5',shape:'berry',r:29},
+ {name:'WATERMELON',skin:'#258f59',light:'#66cf77',inside:'#ff6579',seed:'#302b43',shape:'melon',r:34}
+];
+let t=0,last=0,paused=false,score=0,combo=1,level=1,spawn=0,knifeX=270,knifeDir=1,cutFlash=0,items=[],halves=[],particles=[],juice=[],toastTime=0,stageTime=0,belt=0,perfects=0;
+function notify(s){toast.textContent=s;toast.classList.add('show');toastTime=1.05}
+function burst(x,y,color,n=16){for(let i=0;i<n;i++){let a=rand(0,Math.PI*2),v=rand(1,5);particles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1,life:rand(.35,.85),max:.85,r:rand(2,5),color})}}
+function addItem(){
+ const p=fruitTypes[Math.floor(Math.random()*fruitTypes.length)];
+ // Spawn at the narrow, far end of the belt. Each new item gets its own lane.
+ const lane=rand(-0.72,0.72);
+ items.push({p,x:270+lane*48,y:292,vx:lane*5,vy:rand(92,112),rot:rand(-.12,.12),age:0,cut:false,scale:rand(.82,.98),wobble:rand(0,6),lane});
+}
+function cut(it){if(it.cut)return;it.cut=true;score+=100*combo;combo=Math.min(12,combo+1);perfects++;cutFlash=.12;burst(it.x,it.y,it.p.skin,22);burst(it.x,it.y,it.p.inside,12);
+ for(let i=0;i<10;i++)juice.push({x:it.x+rand(-10,10),y:it.y+rand(-12,12),vx:rand(-4,4),vy:rand(-6,-1),life:rand(.35,.75),color:i%2?'#c6ed61':'#f6f4a2',r:rand(2,5)});
+ halves.push({x:it.x-8,y:it.y,vx:-rand(1,3),vy:-rand(1,3),rot:-.5,p:it.p,life:1,scale:it.scale,side:-1},{x:it.x+8,y:it.y,vx:rand(1,3),vy:-rand(1,3),rot:.5,p:it.p,life:1,scale:it.scale,side:1});
+ notify(combo>=6?'INSANE COMBO!':combo>=3?'JUICY COMBO!':'PERFECT SLICE!')}
+function update(dt){
+ t+=dt;spawn+=dt;belt+=dt*100;
+ // Blade sweeps steadily across the cutting zone.
+ knifeX+=knifeDir*360*dt;
+ if(knifeX>421){knifeX=421;knifeDir=-1}else if(knifeX<119){knifeX=119;knifeDir=1}
+ // One item at a time: a controlled interval prevents crowding.
+ if(spawn>1.05){spawn=0;addItem()}
+ for(let it of items){
+   it.age+=dt;
+   it.y+=it.vy*dt;
+   // Perspective widens toward the viewer, so each item follows its own lane.
+   const beltHalf=118+(it.y-292)*0.205;
+   const targetX=270+it.lane*beltHalf;
+   it.x+=(targetX-it.x)*Math.min(1,dt*2.2);
+   it.rot+=it.vx*.0008;
+   // Cut only as the item reaches the blade line, not while it is queued at the back.
+   const knifeY=452;
+   if(!it.cut && Math.abs(it.y-knifeY)<22 && Math.abs(it.x-knifeX)<it.p.r*.72+18)cut(it);
+ }
+ items=items.filter(it=>it.age<8&&it.y<790&&!it.cut);
+ for(let h of halves){h.x+=h.vx*dt*60;h.y+=h.vy*dt*60;h.vy+=.18*dt*60;h.rot+=h.vx*.006;h.life-=dt}
+ halves=halves.filter(h=>h.life>0&&h.y<820);
+ for(let p of particles){p.x+=p.vx*dt*60;p.y+=p.vy*dt*60;p.vy+=.12*dt*60;p.life-=dt}
+ particles=particles.filter(p=>p.life>0);
+ for(let j of juice){j.x+=j.vx*dt*60;j.y+=j.vy*dt*60;j.vy+=.2*dt*60;j.life-=dt}
+ juice=juice.filter(j=>j.life>0);
+ if(toastTime>0){toastTime-=dt;if(toastTime<=0)toast.classList.remove('show')}
+ if(stageTime>24){stageTime=0;level++;levelEl.textContent=String(level).padStart(2,'0');stage.textContent=['FRESH MARKET','JUICY FACTORY','FRUIT FESTIVAL','MASTER CHEF','TROPICAL RUSH','INFINITE KITCHEN'][(level-1)%6];levelup.textContent='LEVEL '+level+' · '+stage.textContent;levelup.style.opacity=1;setTimeout(()=>levelup.style.opacity=0,1400);combo=1}
+ if(Math.floor(t)%18===0&&t%18<dt)combo=1;
+ scoreEl.textContent=String(score).padStart(4,'0');comboEl.textContent='x'+combo;
+}
+function rr(x,y,w,h,r){g.beginPath();g.roundRect(x,y,w,h,r)}
+function background(){let bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#9eaff2');bg.addColorStop(.5,'#d8e9ff');bg.addColorStop(1,'#a1c9e8');g.fillStyle=bg;g.fillRect(0,0,W,H);
+ // soft clouds and bokeh
+ for(let i=0;i<22;i++){let x=(i*127+Math.sin(t*.25+i)*22)%580-20,y=(i*83)%930;g.fillStyle='rgba(255,255,255,.14)';g.beginPath();g.arc(x,y,12+i%4*5,0,7);g.fill()}
+}
+function conveyor(){// layered perspective conveyor, side rails and rollers
+ g.save();g.shadowColor='#52698555';g.shadowBlur=20;g.fillStyle='#8da4b2';g.beginPath();g.moveTo(139,246);g.lineTo(401,246);g.lineTo(532,852);g.lineTo(8,852);g.closePath();g.fill();g.restore();
+ g.fillStyle='#e9f1f5';g.beginPath();g.moveTo(153,256);g.lineTo(387,256);g.lineTo(508,837);g.lineTo(32,837);g.closePath();g.fill();
+ let beltGrad=g.createLinearGradient(0,250,0,850);beltGrad.addColorStop(0,'#fff');beltGrad.addColorStop(.5,'#f4f8fb');beltGrad.addColorStop(1,'#dce8ef');g.fillStyle=beltGrad;g.beginPath();g.moveTo(169,265);g.lineTo(371,265);g.lineTo(490,825);g.lineTo(50,825);g.closePath();g.fill();
+ // conveyor center seam and moving ticks
+ g.save();g.strokeStyle='#a9bdc9';g.lineWidth=3;g.setLineDash([15,18]);g.lineDashOffset=-belt%33;g.beginPath();g.moveTo(270,270);g.lineTo(270,824);g.stroke();g.restore();
+ // perspective side trim
+ g.strokeStyle='#758d9c';g.lineWidth=7;g.beginPath();g.moveTo(143,247);g.lineTo(10,852);g.moveTo(397,247);g.lineTo(530,852);g.stroke();
+ // steel bolts on side edges
+ for(let i=0;i<7;i++){let y=300+i*75;for(let x of [113-i*15,427+i*15]){g.fillStyle='#d9e5ec';g.beginPath();g.arc(x,y,3,0,7);g.fill()}}
+ // wooden cutting board with dimensional edges
+ g.fillStyle='#6f432c';rr(65,475,410,34,10);g.fill();g.fillStyle='#b97846';rr(69,468,402,31,9);g.fill();g.fillStyle='#d69a65';rr(75,471,390,7,4);g.fill();
+ for(let i=0;i<8;i++){g.fillStyle='rgba(107,57,30,.22)';g.beginPath();g.ellipse(105+i*48,486,16,2,0,0,7);g.fill()}
+}
+function drawFruit(it){let p=it.p;g.save();g.translate(it.x,it.y);g.rotate(it.rot);g.scale(it.scale,it.scale);
+ // ambient shadow
+ g.fillStyle='rgba(31,48,65,.16)';g.beginPath();g.ellipse(5,27,27,8,0,0,7);g.fill();
+ if(p.shape==='cucumber'||p.shape==='carrot'){g.fillStyle=p.skin;g.beginPath();g.ellipse(0,0,p.shape==='carrot'?13:16,p.shape==='carrot'?39:37,0,0,7);g.fill();g.fillStyle=p.light;g.beginPath();g.ellipse(-4,-4,5,26,0,0,7);g.fill();for(let k=-2;k<=2;k++){g.fillStyle=p.inside;g.beginPath();g.arc(k*4,rand(-20,20),1.5,0,7);g.fill()}}
+ else{g.fillStyle=p.skin;g.beginPath();if(p.shape==='berry'){g.moveTo(0,-29);g.bezierCurveTo(36,-23,27,16,0,34);g.bezierCurveTo(-28,13,-34,-22,0,-29)}else if(p.shape==='lemon'){g.ellipse(0,0,35,23,-.15,0,7)}else{g.arc(0,0,p.r,0,7)}g.fill();
+ let shine=g.createRadialGradient(-10,-13,2,0,0,36);shine.addColorStop(0,'rgba(255,255,255,.58)');shine.addColorStop(.35,'rgba(255,255,255,.13)');shine.addColorStop(1,'rgba(0,0,0,.14)');g.fillStyle=shine;g.beginPath();if(p.shape==='berry'){g.moveTo(0,-29);g.bezierCurveTo(36,-23,27,16,0,34);g.bezierCurveTo(-28,13,-34,-22,0,-29)}else if(p.shape==='lemon'){g.ellipse(0,0,35,23,-.15,0,7)}else{g.arc(0,0,p.r,0,7)}g.fill();
+ if(p.shape==='tomato'){g.fillStyle='#319a4c';for(let k=0;k<5;k++){g.save();g.rotate(k*1.256);g.beginPath();g.moveTo(0,-22);g.quadraticCurveTo(5,-34,14,-28);g.quadraticCurveTo(7,-22,0,-22);g.fill();g.restore()}}
+ if(p.shape==='berry'){for(let k=0;k<12;k++){g.fillStyle='#ffe7a3';g.beginPath();g.ellipse(Math.sin(k*8)*17,Math.cos(k*4)*20,1.5,2.5,.4,0,7);g.fill()}}
+ if(p.shape==='kiwi'){g.fillStyle='#fff3d1';g.beginPath();g.arc(0,0,5,0,7);g.fill();for(let k=0;k<10;k++){let a=k*Math.PI/5;g.fillStyle='#392f38';g.beginPath();g.ellipse(Math.cos(a)*17,Math.sin(a)*17,1.6,3,a,0,7);g.fill()}}
+ if(p.shape==='melon'){g.strokeStyle='#b5e57c';g.lineWidth=3;for(let k=-1;k<=1;k++){g.beginPath();g.arc(k*12,0,24,-1.1,1.1);g.stroke()}}
+ }
+ // stem
+ if(['KIWI','LEMON'].includes(p.name)){g.strokeStyle='#4b8848';g.lineWidth=4;g.beginPath();g.moveTo(0,-p.r+4);g.lineTo(3,-p.r-7);g.stroke()}
+ g.restore()}
+function drawHalf(h){g.save();g.translate(h.x,h.y);g.rotate(h.rot);g.scale(h.scale,h.scale);g.globalAlpha=clamp(h.life,0,1);
+ g.fillStyle=h.p.skin;g.beginPath();g.ellipse(0,0,h.p.r*.58,h.p.r*.9,0,0,7);g.fill();g.fillStyle=h.p.inside;g.beginPath();g.ellipse(h.side*3,0,h.p.r*.47,h.p.r*.77,0,0,7);g.fill();g.strokeStyle='rgba(255,255,255,.7)';g.lineWidth=2;g.stroke();g.restore()}
+function knife(){g.save();g.translate(knifeX,452);g.rotate(-.32);
+ // handle with rivets
+ g.shadowColor='#23384e66';g.shadowBlur=9;g.fillStyle='#65432f';g.beginPath();g.roundRect(-8,-112,19,73,8);g.fill();g.shadowBlur=0;g.fillStyle='#c99568';for(let y=-96;y<-50;y+=14){g.beginPath();g.arc(1,y,2.5,0,7);g.fill()}
+ // blade metallic gradient
+ let metal=g.createLinearGradient(-24,-38,10,52);metal.addColorStop(0,'#fff');metal.addColorStop(.35,'#dce8ef');metal.addColorStop(.72,'#8fa6b8');metal.addColorStop(1,'#f9ffff');
+ g.fillStyle=metal;g.strokeStyle='#71899b';g.lineWidth=1.5;g.beginPath();g.moveTo(-3,-42);g.lineTo(8,-42);g.lineTo(24,50);g.lineTo(-28,30);g.closePath();g.fill();g.stroke();g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=2;g.beginPath();g.moveTo(-1,-35);g.lineTo(-21,27);g.stroke();g.restore()}
+function draw(){background();conveyor();
+ // produce coming toward the blade in perspective
+ for(let it of items)drawFruit(it);
+ for(let h of halves)drawHalf(h);
+ for(let p of particles){g.globalAlpha=clamp(p.life/p.max,0,1);g.fillStyle=p.color;g.beginPath();g.arc(p.x,p.y,p.r,0,7);g.fill()}g.globalAlpha=1;
+ for(let j of juice){g.globalAlpha=clamp(j.life/.75,0,1);g.fillStyle=j.color;g.beginPath();g.ellipse(j.x,j.y,j.r,j.r*1.8,.4,0,7);g.fill()}g.globalAlpha=1;
+ knife();
+ // slicing glint
+ if(cutFlash>0){g.fillStyle='rgba(255,255,255,.17)';g.fillRect(0,0,W,H);cutFlash-=.015}
+}
+function loop(ts){if(!last)last=ts;let dt=Math.min((ts-last)/1000,.04);last=ts;if(!paused)update(dt);draw();requestAnimationFrame(loop)}
+pause.onclick=()=>{paused=!paused;pause.textContent=paused?'▶ RESUME':'Ⅱ PAUSE'};document.addEventListener('visibilitychange',()=>last=0);
+addItem();requestAnimationFrame(loop);
+})();
+</script></body></html>
